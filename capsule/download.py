@@ -1,6 +1,8 @@
 import os
 import six
+import shutil
 import wget
+import traceback
 import zipfile
 
 def trim_repo_url(url):
@@ -78,6 +80,8 @@ def rupture(url, outpath=None, branch='master', dirname=None):
         base, cs= _unzip(filename)
         _delete(filename)
         to_find = "{}/{}-{}".format(base, file, branch)
-        os.rename(to_find, dirname or file)
+        _newname = dirname or file
+        shutil.move(to_find, base+"/"+_newname)
     except Exception as e:
+        six.print_(traceback.format_exc())
         six.print_("Cannot download the repo. Could you check the repo url ?")

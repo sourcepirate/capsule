@@ -12,7 +12,7 @@ install_dependencies = [
 setup(
     name = 'capsule_cli',
     packages = ['capsule'],
-    version = '1.0.0',
+    version = '1.0.1',
     long_description= read_me(),
     description = "Bookmark and clone your favorite code.",
     author='sourcepirate',
