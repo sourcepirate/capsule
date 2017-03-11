@@ -1,0 +1,6 @@
+.vscode
+*.pyc
+capenv
+*.egg-info
+dist
+build
