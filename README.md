@@ -1,14 +1,14 @@
-##Capsule
+## Capsule
 
 Store and clone the github repositories you like without any commit history. 
 
 
-##Installation
+## Installation
 ```
 pip install capsule_cli
 ```
 
-##Usage
+## Usage
 
 ```
 usage: 
@@ -50,5 +50,5 @@ usage: capsule [-h] [-b BRANCH] [-o OUT] [-d DNAME] name
 
 ```
 
-##License
+## License
 MIT
