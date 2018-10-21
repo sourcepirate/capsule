@@ -55,7 +55,11 @@ class Capsule(object):
                 branch = args.branch or 'master'
                 outpath = args.out
                 dirname = args.dname
-                dwl.rupture(url, outpath=outpath, branch=branch, dirname=dirname)
+                release = args.release
+                dwl.rupture(
+                    url, outpath=outpath, branch=branch, 
+                    dirname=dirname, release=release
+                )
             else:
                 six.print_("Repo not found. Are you sure you added it ?")
         else:
