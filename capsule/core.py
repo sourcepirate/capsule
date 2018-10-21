@@ -44,6 +44,7 @@ class Capsule(object):
         parser = argparse.ArgumentParser(description='repo to rupture')
         parser.add_argument('name', help="Name of the repo")
         parser.add_argument('-b', '--branch', help="Branch for repo")
+        parser.add_argument('-rel', '--release', help="github release for repo")
         parser.add_argument('-o', '--out', help="Output directory")
         parser.add_argument('-d', '--dname', help="Output directory name")
         args = parser.parse_args(sys.argv[2:])
@@ -54,7 +55,11 @@ class Capsule(object):
                 branch = args.branch or 'master'
                 outpath = args.out
                 dirname = args.dname
-                dwl.rupture(url, outpath=outpath, branch=branch, dirname=dirname)
+                release = args.release
+                dwl.rupture(
+                    url, outpath=outpath, branch=branch, 
+                    dirname=dirname, release=release
+                )
             else:
                 six.print_("Repo not found. Are you sure you added it ?")
         else:

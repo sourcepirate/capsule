@@ -45,7 +45,7 @@ capsule rupture react
 usage: capsule [-h] [-n NAME] url
 
 #rupture help
-usage: capsule [-h] [-b BRANCH] [-o OUT] [-d DNAME] name
+usage: capsule [-h] [-b BRANCH] [-rel RELEASE] [-o OUT] [-d DNAME] name
 
 
 ```

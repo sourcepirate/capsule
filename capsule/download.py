@@ -9,7 +9,7 @@ def trim_repo_url(url):
     """Replace the .git in url"""
     return url.replace(".git", "")
 
-def get_archive_url(url, branch=None):
+def get_archive_url(url, branch='master', release=None):
     """
       get the archive url and filename
       Args:
@@ -21,13 +21,15 @@ def get_archive_url(url, branch=None):
     git_url = trim_repo_url(url)
     fragment = None
     file = git_url.split("/")[-1]
-    if not branch:
-        fragment = "/archive/master.zip"
+    
+    if release:
+        fragment = "/archive/{}.zip".format(release)
     else:
         fragment = "/archive/{}.zip".format(branch)
+    
     return file, git_url+fragment
 
-def _download(url, outpath=None, dirname=None, branch=None):
+def _download(url, outpath=None, dirname=None, branch='master', release=None):
     """download the zip files in output directory with dirname
        
        Args:
@@ -38,9 +40,10 @@ def _download(url, outpath=None, dirname=None, branch=None):
        Returns:
          file name
     """
-
+    six.print_('downloading...')
     outfolder = outpath or os.getcwd()
-    file, archive_url = get_archive_url(url)
+    file, archive_url = get_archive_url(url, branch, release)
+    six.print_(archive_url)
     if dirname:
         outfolder = "{}/{}.zip".format(outfolder, dirname)
     return file, wget.download(archive_url, out=outfolder)
@@ -61,7 +64,7 @@ def _delete(filename):
     return os.remove(filename)
 
 
-def rupture(url, outpath=None, branch='master', dirname=None):
+def rupture(url, outpath=None, branch='master', dirname=None, release=None):
     """
       Downloads the archive, unzips it and deletes the archive
       file
@@ -76,9 +79,15 @@ def rupture(url, outpath=None, branch='master', dirname=None):
         None
     """
     try:
-        file, filename = _download(url, outpath=outpath, dirname=dirname, branch=branch)
-        base, cs= _unzip(filename)
+        file, filename = _download(
+            url, outpath=outpath, 
+            dirname=dirname, branch=branch, 
+            release=release
+        )
+        base, cs = _unzip(filename)
         _delete(filename)
+        if release or branch != 'master':
+            return
         to_find = "{}/{}-{}".format(base, file, branch)
         _newname = dirname or file
         shutil.move(to_find, base+"/"+_newname)
