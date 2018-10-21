@@ -2,7 +2,7 @@ import six
 import sys
 import argparse
 import .data as db
-import download as dwl
+import .download as dwl
 
 DESCRIPTION = "Save your favorite repo"
 USAGE = """
