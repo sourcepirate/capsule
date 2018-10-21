@@ -9,7 +9,7 @@ def trim_repo_url(url):
     """Replace the .git in url"""
     return url.replace(".git", "")
 
-def get_archive_url(url, branch=None):
+def get_archive_url(url, branch=None, release=None):
     """
       get the archive url and filename
       Args:
@@ -23,11 +23,13 @@ def get_archive_url(url, branch=None):
     file = git_url.split("/")[-1]
     if not branch:
         fragment = "/archive/master.zip"
-    else:
+    elif branch:
         fragment = "/archive/{}.zip".format(branch)
+    elif release:
+        fragment = "/archive/{}.zip".format(release)
     return file, git_url+fragment
 
-def _download(url, outpath=None, dirname=None, branch=None):
+def _download(url, outpath=None, dirname=None, branch=None, release=None):
     """download the zip files in output directory with dirname
        
        Args:
@@ -40,7 +42,7 @@ def _download(url, outpath=None, dirname=None, branch=None):
     """
 
     outfolder = outpath or os.getcwd()
-    file, archive_url = get_archive_url(url)
+    file, archive_url = get_archive_url(url, branch, release)
     if dirname:
         outfolder = "{}/{}.zip".format(outfolder, dirname)
     return file, wget.download(archive_url, out=outfolder)
@@ -61,7 +63,7 @@ def _delete(filename):
     return os.remove(filename)
 
 
-def rupture(url, outpath=None, branch='master', dirname=None):
+def rupture(url, outpath=None, branch='master', dirname=None, release=None):
     """
       Downloads the archive, unzips it and deletes the archive
       file
@@ -76,7 +78,12 @@ def rupture(url, outpath=None, branch='master', dirname=None):
         None
     """
     try:
-        file, filename = _download(url, outpath=outpath, dirname=dirname, branch=branch)
+        file, filename = _download(
+            url, outpath=outpath, 
+            dirname=dirname, branch=branch, 
+            release=release
+        )
+        six.print_('file : ' + file)
         base, cs= _unzip(filename)
         _delete(filename)
         to_find = "{}/{}-{}".format(base, file, branch)

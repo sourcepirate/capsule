@@ -44,6 +44,7 @@ class Capsule(object):
         parser = argparse.ArgumentParser(description='repo to rupture')
         parser.add_argument('name', help="Name of the repo")
         parser.add_argument('-b', '--branch', help="Branch for repo")
+        parser.add_argument('-rel', '--release', help="github release for repo")
         parser.add_argument('-o', '--out', help="Output directory")
         parser.add_argument('-d', '--dname', help="Output directory name")
         args = parser.parse_args(sys.argv[2:])
