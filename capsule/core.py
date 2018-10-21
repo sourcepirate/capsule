@@ -1,7 +1,7 @@
 import six
 import sys
 import argparse
-import data as db
+import .data as db
 import download as dwl
 
 DESCRIPTION = "Save your favorite repo"
